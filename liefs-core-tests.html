@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>liefs-layout-manager liefs-lib Tests Jasmine Spec Runner v2.5.2</title>
+
+  <link rel="shortcut icon" type="image/png" href="../jasmine-core/images/jasmine_favicon.png">
+  <link rel="stylesheet" href="../jasmine-core/lib/jasmine-core/jasmine.css">
+
+  <script src="../jasmine-core/lib/jasmine-core/jasmine.js"></script>
+  <script src="../jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
+  <script src="../jasmine-core/lib/jasmine-core/boot.js"></script>
+  <!-- include source files here... -->
+  <script src="../liefs-container/index_.js"></script>
+  <script src="../liefs-coordinates/index_.js"></script>
+  <script src="../liefs-item/index_.js"></script>
+  <script src="../liefs-lib/index_.js"></script>
+
+  <!-- include spec files here... -->
+  <script>
+
+  function ri(obj) { // remove instance - or no check will ever pass
+    delete obj.instance;
+    return obj;
+  }
+
+  describe("Tests For liefs-core", function() {
+    var testNumber = 5;
+    var testString = "one:two:three:four";
+    var testFunction = function(){};
+    var testOn = {a:1, b:2, c:3};
+    var testOs = {a:"1", b:"2", c:"3"};
+    var testAn = [1, 2, 3];
+    var testAs = ["1", "2", "3"];
+    var testAAs = [ ["1", "2", "3"], ["1", "2", "3"]];
+
+    var menuItem = new Item("Menu", "200px");
+    var contentItem = new Item("Content", "100%");
+    var arrayOfItems = [menuItem, contentItem];
+
+    var masterContainerH = new Container("Master", true, arrayOfItems, 4);
+    var masterContainerV = new Container("Master", false, arrayOfItems, 4);
+    var masterItemH = new Item("Master", "0px", undefined, undefined, masterContainerH);
+    var masterItemV = new Item("Master", "0px", undefined, undefined, masterContainerV);
+
+    describe("Further Testing Of TypeOf", () => {
+      it("Testing Item/Container", () => {
+            expect(TypeOf(menuItem)).toBe('Item');
+            expect(TypeOf(masterContainerH)).toBe('Container');
+            expect(TypeOf(arrayOfItems)).toBe('array:Item');
+            expect(TypeOf(Item.items)).toBe('object:array:Item');
+            expect(TypeOf(Container.containers)).toBe('object:Container');
+          });
+    });
+
+    describe("Test For liefs-item I()", () => {
+      it(JSON.stringify(ri(I("basic","200px"))), () => {
+        expect(ri(I("basic","200px"))).toEqual(ri(new Item("basic", "200px")));
+      });
+      it(JSON.stringify(ri(I("basic","200px", "100px"))), () => {
+        expect(ri(I("basic","200px", "100px"))).toEqual(ri(new Item("basic", "200px", "100px")));
+      });
+      it(JSON.stringify(ri(I("basic","200px", "100px", "400px"))), () => {
+        expect(ri(I("basic","200px", "100px", "400px"))).toEqual(ri(new Item("basic", "200px", "100px", "400px")));
+      });
+      it("Item With Continer", () => {
+        expect(ri(I("Master-", arrayOfItems))).toEqual(ri(masterItemH));
+        expect(ri(I("Master-", 4, arrayOfItems))).toEqual(ri(masterItemH));
+        expect(ri(I("Master-", menuItem, contentItem))).toEqual(ri(masterItemH));
+        expect(ri(I("-Master", menuItem, contentItem))).toEqual(ri(masterItemH));
+        expect(ri(I(menuItem, contentItem, "hor", "Master"))).toEqual(ri(masterItemH));
+        expect(ri(I(menuItem, "Master-", contentItem, 4))).toEqual(ri(masterItemH));
+        expect(ri(I("hor", menuItem, 4, contentItem, "Master"))).toEqual(ri(masterItemH));
+        expect(ri(h(menuItem, 4, contentItem, "Master"))).toEqual(ri(masterItemH));
+
+        expect(ri(I("Master|", arrayOfItems))).toEqual(ri(masterItemV));
+        expect(ri(I("Master|", 4, arrayOfItems))).toEqual(ri(masterItemV));
+        expect(ri(I("Master|", menuItem, contentItem))).toEqual(ri(masterItemV));
+        expect(ri(I("|Master", menuItem, contentItem))).toEqual(ri(masterItemV));
+        expect(ri(I(menuItem, contentItem, "ver", "Master"))).toEqual(ri(masterItemV));
+        expect(ri(I(menuItem, "Master|", contentItem, 4))).toEqual(ri(masterItemV));
+        expect(ri(I("ver", menuItem, 4, contentItem, "Master"))).toEqual(ri(masterItemV));
+        expect(ri(v(menuItem, 4, contentItem, "Master"))).toEqual(ri(masterItemV));
+      });
+      it("Items: " + JSON.stringify(Object.keys(Item.items), undefined, 4), () => {expect(true).toBe(true);});
+      it("Containers " + JSON.stringify(Object.keys(Container.containers), undefined, 4), () => {expect(true).toBe(true);});
+    });
+
+    describe("Update", () => {
+      it("Testing update", () => {
+        expect(TypeOf(Container.get("Master"))).toBe('Container');
+        expect(Container.get("Master").update(1000,1000)).toEqual({
+          Menu: new Coord(992, 200, 4, 4), Content: new Coord(992, 788, 4, 208)});
+      });
+    });
+
+  });
+
+
+  </script>
+</head>
+
+<body>
+</body>
+</html>
