@@ -1,6 +1,6 @@
-import {liefsError, TypeOf, CheckArgTypes, throwType, isStart, argsObj} from "../liefs-lib/liefs-lib"; //
-import {Coord} from "../liefs-coordinates/liefs-coordinates";
-import {Container} from "../liefs-container/liefs-container";
+import {liefsError, TypeOf, CheckArgTypes, throwType, isStart, argsObj} from "liefs-lib";
+import {Coord} from "liefs-coordinates";
+import {Container} from "liefs-container";
 
 export class Item {
     static get(label: string, instance = 0) {
