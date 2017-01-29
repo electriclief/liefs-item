@@ -1,6 +1,3 @@
-"use strict";
-var liefs_lib_1 = require("liefs-lib");
-var liefs_container_1 = require("liefs-container");
 var Item = (function () {
     function Item(label, start, min, max, container) {
         if (min === void 0) { min = undefined; }
@@ -47,7 +44,7 @@ var Item = (function () {
             Arguments[_i] = arguments[_i];
         }
         var newItem;
-        var myArgsObj = liefs_lib_1.argsObj(arguments);
+        var myArgsObj = argsObj(arguments);
         console.log(myArgsObj);
         var Ilabel, Istart, Imin, Imax, Imargin;
         var Iitems, Icontainer, IisHor;
@@ -97,7 +94,7 @@ var Item = (function () {
             if (myArgsObj.start.length > 2)
                 Imax = myArgsObj.start[2];
             if (myArgsObj.start.length > 3)
-                liefs_lib_1.liefsError.badArgs("Start, Min, Max", "That, and more!", "Create Instance Of Item() " + JSON.stringify(myArgsObj.start.slice(3)));
+                liefsError.badArgs("Start, Min, Max", "That, and more!", "Create Instance Of Item() " + JSON.stringify(myArgsObj.start.slice(3)));
         }
         if ("Item" in myArgsObj) {
             Iitems = myArgsObj.Item;
@@ -110,7 +107,7 @@ var Item = (function () {
         if (!Istart)
             Istart = "0px"; // liefsError.badArgs("A Start Value", "none", "I() - " + Ilabel);
         if (Iitems && Icontainer)
-            liefs_lib_1.liefsError.badArgs("items, or a container.", "received both", "Create Instance Of Item() " + Ilabel);
+            liefsError.badArgs("items, or a container.", "received both", "Create Instance Of Item() " + Ilabel);
         if (Iitems) {
             if (IisHor === undefined) {
                 newItem = new Item(Ilabel, Istart, Imin, Imax);
@@ -119,7 +116,7 @@ var Item = (function () {
                 return newItem;
             }
             else
-                Icontainer = new liefs_container_1.Container(Ilabel, IisHor, Iitems, Imargin);
+                Icontainer = new Container(Ilabel, IisHor, Iitems, Imargin);
         }
         newItem = new Item(Ilabel, Istart, Imin, Imax, Icontainer);
         if (IpageTitle)
