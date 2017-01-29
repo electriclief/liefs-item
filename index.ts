@@ -8,12 +8,12 @@ export class Item {
         return undefined;
     }
     static h(...Arguments: any[]) {
-      Arguments.push("hor");
-      return I(...Arguments);
+        Arguments.push("hor");
+        return I(...Arguments);
     }
     static v(...Arguments: any[]) {
-      Arguments.push("ver");
-      return I(...Arguments);
+        Arguments.push("ver");
+        return I(...Arguments);
     }
     static I(...Arguments: any[]): Item {
         let newItem: Item;
@@ -24,15 +24,15 @@ export class Item {
         let isItem: string;
         let IpageTitle: string;
         if ("array_Item" in myArgsObj) {
-          if (!("Item" in myArgsObj)) myArgsObj.Item = [];
-          for (let eachArray of myArgsObj["array_Item"])
-            for (let eachItem of eachArray)
-              myArgsObj.Item.push(eachItem);
+            if (!("Item" in myArgsObj)) myArgsObj.Item = [];
+            for (let eachArray of myArgsObj["array_Item"])
+                for (let eachItem of eachArray)
+                    myArgsObj.Item.push(eachItem);
         }
         if ("number" in myArgsObj) Imargin = myArgsObj.number[0];
         if ("string" in myArgsObj) {
             for (let i = 0; i < myArgsObj.string.length; i++) {
-              isItem = myArgsObj.string[i];
+                isItem = myArgsObj.string[i];
                 if (isItem[0] === "-" || isItem[0] === "|") {
                     IisHor = (isItem[0] === "-");
                     myArgsObj.string[i] = isItem.slice(1);
@@ -44,9 +44,9 @@ export class Item {
                 if (isItem.slice(0, 3) === "hor" || isItem.slice(0, 3) === "ver")
                     IisHor = (isItem.slice(0, 3) === "hor");
                 else if (!(Ilabel))
-                  Ilabel = myArgsObj.string[i];
+                    Ilabel = myArgsObj.string[i];
                 else if (!(IpageTitle))
-                  IpageTitle = myArgsObj.string[i];
+                    IpageTitle = myArgsObj.string[i];
                 if (isItem in Item.items) {
                     if (!myArgsObj["item"]) myArgsObj["item"] = [];
                     myArgsObj["item"].push(items[isItem]);
@@ -60,11 +60,11 @@ export class Item {
             if (myArgsObj.start.length > 3)
                 liefsError.badArgs("Start, Min, Max", "That, and more!", "Create Instance Of Item() " + JSON.stringify(myArgsObj.start.slice(3)));
         }
-        if ("Item" in myArgsObj) {Iitems = myArgsObj.Item; }
+        if ("Item" in myArgsObj) { Iitems = myArgsObj.Item; }
         if ("Container" in myArgsObj) Icontainer = myArgsObj.container[0];
-///// ok now create
+        ///// ok now create
         if (!Ilabel) Ilabel = "item" + (Object.keys(Item.items).length / 1000).toFixed(3).slice(-3);
-        if (!Istart) Istart =  "0px"; // liefsError.badArgs("A Start Value", "none", "I() - " + Ilabel);
+        if (!Istart) Istart = "0px"; // liefsError.badArgs("A Start Value", "none", "I() - " + Ilabel);
 
         if (Iitems && Icontainer) liefsError.badArgs("items, or a container.", "received both", "Create Instance Of Item() " + Ilabel);
         if (Iitems) {
@@ -75,7 +75,7 @@ export class Item {
                 return newItem;
             }
             else
-              Icontainer = new Container(Ilabel, IisHor, Iitems, Imargin);
+                Icontainer = new Container(Ilabel, IisHor, Iitems, Imargin);
         }
         newItem = new Item(Ilabel, Istart, Imin, Imax, Icontainer);
         if (IpageTitle) newItem.pageTitle = IpageTitle;
@@ -83,7 +83,7 @@ export class Item {
     }
 
     static debug = true;
-    static items: {[index: string]: Array<Item>; } = {};
+    static items: { [index: string]: Array<Item>; } = {};
 
     label: string;
     instance: number;
