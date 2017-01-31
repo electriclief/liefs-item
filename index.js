@@ -22,7 +22,7 @@ var Item = (function () {
         Item.items[label].push(this);
         if (Handler)
             Handler.activate();
-        if (!isUniqueSelector(this.selector()) && (!this.container) && (!jasmineTests))
+        if (!isUniqueSelector(this.selector()) && (!this.container) && (jasmineTests === undefined))
             liefs_lib_1.liefsError.badArgs("Selector Search for " + this.label + " to find ONE matching div", "Matched " + document.querySelectorAll(this.selector()).length.toString() + " times", "Handler Item Check");
     }
     Item.get = function (label, instance) {
