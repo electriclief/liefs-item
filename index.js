@@ -22,6 +22,8 @@ var Item = (function () {
         Item.items[label].push(this);
         if (Handler)
             Handler.activate();
+        if (this.start === "0px")
+            liefs_container_1.Container.suspectedRoot = this.container;
         if (!isUniqueSelector(this.selector()) && (!this.container) && !("jasmineTests" in window))
             liefs_lib_1.liefsError.badArgs("Selector Search for '" + this.label + "' to find ONE matching div", "Matched " + document.querySelectorAll(this.selector()).length.toString() + " times", "Handler Item Check");
     }

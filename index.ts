@@ -113,6 +113,8 @@ export class Item {
         Item.items[label].push(this);
         if (Handler) Handler.activate();
 
+        if (this.start === "0px") Container.suspectedRoot = this.container;
+
         if (!isUniqueSelector(this.selector()) && (!this.container) && !("jasmineTests" in window))
           liefsError.badArgs("Selector Search for '" + this.label + "' to find ONE matching div",
           "Matched " + document.querySelectorAll(this.selector()).length.toString() + " times", "Handler Item Check");
