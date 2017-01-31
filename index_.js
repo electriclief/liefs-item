@@ -17,7 +17,7 @@ var Item = (function () {
             Item.items[label] = [];
         this.instance = Item.items[label].length;
         Item.items[label].push(this);
-        if (Handler)
+        if ("Handler" in window)
             Handler.activate();
         if (this.start === "0px")
             Container.suspectedRoot = this.container;
