@@ -2,6 +2,7 @@ import {liefsError, TypeOf, CheckArgTypes, throwType, isStart, argsObj} from "li
 import {Coord} from "liefs-coordinates";
 import {Container} from "liefs-container";
 
+
 export class Item {
     static get(label: string, instance = 0) {
         if (label in Item.items) return Item.items[label][instance];
@@ -18,7 +19,6 @@ export class Item {
     static I(...Arguments: any[]): Item {
         let newItem: Item;
         let myArgsObj = argsObj(arguments);
-        console.log(myArgsObj);
         let Ilabel: string, Istart: string, Imin: string, Imax: string, Imargin: number;
         let Iitems: Array<Item>, Icontainer: Container, IisHor: boolean;
         let isItem: string;
@@ -109,8 +109,9 @@ export class Item {
         if (!(label in Item.items)) Item.items[label] = [];
         this.instance = Item.items[label].length;
         Item.items[label].push(this);
+        if (Handler) Handler.activate();
     }
-    cssSelect() { return "#" + this.label; }
+    selector() { return "#" + this.label; }
 }
 
 export let I = Item.I;

@@ -15,6 +15,8 @@ var Item = (function () {
             Item.items[label] = [];
         this.instance = Item.items[label].length;
         Item.items[label].push(this);
+        if (Handler)
+            Handler.activate();
     }
     Item.get = function (label, instance) {
         if (instance === void 0) { instance = 0; }
@@ -45,7 +47,6 @@ var Item = (function () {
         }
         var newItem;
         var myArgsObj = argsObj(arguments);
-        console.log(myArgsObj);
         var Ilabel, Istart, Imin, Imax, Imargin;
         var Iitems, Icontainer, IisHor;
         var isItem;
@@ -123,7 +124,7 @@ var Item = (function () {
             newItem.pageTitle = IpageTitle;
         return newItem;
     };
-    Item.prototype.cssSelect = function () { return "#" + this.label; };
+    Item.prototype.selector = function () { return "#" + this.label; };
     return Item;
 }());
 Item.debug = true;
