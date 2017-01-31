@@ -2,6 +2,7 @@ import {liefsError, TypeOf, CheckArgTypes, throwType, isStart, argsObj} from "li
 import {Coord} from "liefs-coordinates";
 import {Container} from "liefs-container";
 
+declare var jasmineTests: boolean;
 
 export class Item {
     static get(label: string, instance = 0) {
@@ -98,6 +99,7 @@ export class Item {
     pageTitle: string;
     currentPage: number;
     el: Element;
+    selector = () => { return "#" + this.label; };
 
     constructor(label: string, start: string, min: string = undefined, max: string = undefined, container: Container = undefined) {
         this.label = label;
@@ -110,8 +112,12 @@ export class Item {
         this.instance = Item.items[label].length;
         Item.items[label].push(this);
         if (Handler) Handler.activate();
-    }
-    selector() { return "#" + this.label; }
+
+        if (!isUniqueSelector(this.selector()) && (!this.container) && (!jasmineTests))
+          liefsError.badArgs("Selector Search for " + this.label + " to find ONE matching div",
+          "Matched " + document.querySelectorAll(this.selector()).length.toString() + " times", "Handler Item Check");
+      }
+
 }
 
 export let I = Item.I;

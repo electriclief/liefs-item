@@ -6,6 +6,8 @@ var Item = (function () {
         if (min === void 0) { min = undefined; }
         if (max === void 0) { max = undefined; }
         if (container === void 0) { container = undefined; }
+        var _this = this;
+        this.selector = function () { return "#" + _this.label; };
         this.label = label;
         this.start = this.current = start;
         if (min)
@@ -20,6 +22,8 @@ var Item = (function () {
         Item.items[label].push(this);
         if (Handler)
             Handler.activate();
+        if (!isUniqueSelector(this.selector()) && (!this.container) && (!jasmineTests))
+            liefs_lib_1.liefsError.badArgs("Selector Search for " + this.label + " to find ONE matching div", "Matched " + document.querySelectorAll(this.selector()).length.toString() + " times", "Handler Item Check");
     }
     Item.get = function (label, instance) {
         if (instance === void 0) { instance = 0; }
@@ -127,7 +131,6 @@ var Item = (function () {
             newItem.pageTitle = IpageTitle;
         return newItem;
     };
-    Item.prototype.selector = function () { return "#" + this.label; };
     return Item;
 }());
 Item.debug = true;
