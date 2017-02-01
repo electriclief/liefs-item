@@ -112,7 +112,7 @@ export class Item {
         this.instance = Item.items[label].length;
         Item.items[label].push(this);
 
-        if ("Handler" in window) Handler.activate();
+        if (typeof Handler === "function") Handler.activate();
 
         if (this.start === "0px") Container.suspectedRoot = this.container;
 

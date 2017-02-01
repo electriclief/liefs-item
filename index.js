@@ -1,13 +1,9 @@
 "use strict";
-var liefs_lib_1 = require("liefs-lib");
-var liefs_container_1 = require("liefs-container");
-var Item = (function () {
-    function Item(label, start, min, max, container) {
-        if (min === void 0) { min = undefined; }
-        if (max === void 0) { max = undefined; }
-        if (container === void 0) { container = undefined; }
-        var _this = this;
-        this.selector = function () { return "#" + _this.label; };
+const liefs_lib_1 = require("liefs-lib");
+const liefs_container_1 = require("liefs-container");
+class Item {
+    constructor(label, start, min = undefined, max = undefined, container = undefined) {
+        this.selector = () => { return "#" + this.label; };
         this.label = label;
         this.start = this.current = start;
         if (min)
@@ -20,61 +16,44 @@ var Item = (function () {
             Item.items[label] = [];
         this.instance = Item.items[label].length;
         Item.items[label].push(this);
-        if ("Handler" in window)
+        if (typeof Handler === "function")
             Handler.activate();
         if (this.start === "0px")
             liefs_container_1.Container.suspectedRoot = this.container;
         if (!isUniqueSelector(this.selector()) && (!this.container) && !("jasmineTests" in window))
             liefs_lib_1.liefsError.badArgs("Selector Search for '" + this.label + "' to find ONE matching div", "Matched " + document.querySelectorAll(this.selector()).length.toString() + " times", "Handler Item Check");
     }
-    Item.get = function (label, instance) {
-        if (instance === void 0) { instance = 0; }
+    static get(label, instance = 0) {
         if (label in Item.items)
             return Item.items[label][instance];
         return undefined;
-    };
-    Item.h = function () {
-        var Arguments = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            Arguments[_i] = arguments[_i];
-        }
+    }
+    static h(...Arguments) {
         Arguments.push("hor");
-        return exports.I.apply(void 0, Arguments);
-    };
-    Item.v = function () {
-        var Arguments = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            Arguments[_i] = arguments[_i];
-        }
+        return exports.I(...Arguments);
+    }
+    static v(...Arguments) {
         Arguments.push("ver");
-        return exports.I.apply(void 0, Arguments);
-    };
-    Item.I = function () {
-        var Arguments = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            Arguments[_i] = arguments[_i];
-        }
-        var newItem;
-        var myArgsObj = liefs_lib_1.argsObj(arguments);
-        var Ilabel, Istart, Imin, Imax, Imargin;
-        var Iitems, Icontainer, IisHor;
-        var isItem;
-        var IpageTitle;
+        return exports.I(...Arguments);
+    }
+    static I(...Arguments) {
+        let newItem;
+        let myArgsObj = liefs_lib_1.argsObj(arguments);
+        let Ilabel, Istart, Imin, Imax, Imargin;
+        let Iitems, Icontainer, IisHor;
+        let isItem;
+        let IpageTitle;
         if ("array_Item" in myArgsObj) {
             if (!("Item" in myArgsObj))
                 myArgsObj.Item = [];
-            for (var _a = 0, _b = myArgsObj["array_Item"]; _a < _b.length; _a++) {
-                var eachArray = _b[_a];
-                for (var _c = 0, eachArray_1 = eachArray; _c < eachArray_1.length; _c++) {
-                    var eachItem = eachArray_1[_c];
+            for (let eachArray of myArgsObj["array_Item"])
+                for (let eachItem of eachArray)
                     myArgsObj.Item.push(eachItem);
-                }
-            }
         }
         if ("number" in myArgsObj)
             Imargin = myArgsObj.number[0];
         if ("string" in myArgsObj) {
-            for (var i = 0; i < myArgsObj.string.length; i++) {
+            for (let i = 0; i < myArgsObj.string.length; i++) {
                 isItem = myArgsObj.string[i];
                 if (isItem[0] === "-" || isItem[0] === "|") {
                     IisHor = (isItem[0] === "-");
@@ -111,11 +90,10 @@ var Item = (function () {
         }
         if ("Container" in myArgsObj)
             Icontainer = myArgsObj.container[0];
-        ///// ok now create
         if (!Ilabel)
             Ilabel = "item" + (Object.keys(Item.items).length / 1000).toFixed(3).slice(-3);
         if (!Istart)
-            Istart = "0px"; // liefsError.badArgs("A Start Value", "none", "I() - " + Ilabel);
+            Istart = "0px";
         if (Iitems && Icontainer)
             liefs_lib_1.liefsError.badArgs("items, or a container.", "received both", "Create Instance Of Item() " + Ilabel);
         if (Iitems) {
@@ -132,9 +110,8 @@ var Item = (function () {
         if (IpageTitle)
             newItem.pageTitle = IpageTitle;
         return newItem;
-    };
-    return Item;
-}());
+    }
+}
 Item.debug = true;
 Item.items = {};
 exports.Item = Item;
@@ -143,3 +120,4 @@ exports.v = Item.v;
 exports.h = Item.h;
 exports.items = Item.items;
 exports.getItem = Item.get;
+//# sourceMappingURL=index.js.map
