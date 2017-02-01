@@ -25,10 +25,10 @@
 </html>
 <script>
 var jasmineTests = true;
-function ri(obj) {
-  delete obj.instance; //// remove instance - or no check will ever pass
-  delete obj.selector; //// Jasmine doesn't like to compare functions
-  return obj;
+function ri(item) {
+  delete item.instance; //// remove instance - or no check will ever pass
+  delete item.selector; //// Jasmine doesn't like to compare functions
+  return item;
 }
 
 describe("Tests For liefs-core", function() {
