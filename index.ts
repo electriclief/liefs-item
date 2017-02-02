@@ -1,4 +1,4 @@
-import {liefsError, TypeOf, CheckArgTypes, throwType, isStart, argsObj} from "liefs-lib";
+import {liefsError, TypeOf, CheckArgTypes, throwType, isStart, argsObj, isUniqueSelector} from "liefs-lib";
 import {Coord} from "liefs-coordinates";
 import {Container} from "liefs-container";
 
@@ -116,7 +116,8 @@ export class Item {
 
         if (this.start === "0px") Container.suspectedRoot = this.container;
 
-        if (!isUniqueSelector(this.selector()) && (!this.container) && !("jasmineTests" in window))
+        if (isUniqueSelector(this.selector())) this.el = document.querySelectorAll(this.selector())[0];
+        else if ((!this.container) && !("jasmineTests" in window))
           liefsError.badArgs("Selector Search for '" + this.label + "' to find ONE matching div",
           "Matched " + document.querySelectorAll(this.selector()).length.toString() + " times", "Handler Item Check");
       }

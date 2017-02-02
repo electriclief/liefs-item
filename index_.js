@@ -21,7 +21,9 @@ var Item = (function () {
             Handler.activate();
         if (this.start === "0px")
             Container.suspectedRoot = this.container;
-        if (!isUniqueSelector(this.selector()) && (!this.container) && !("jasmineTests" in window))
+        if (isUniqueSelector(this.selector()))
+            this.el = document.querySelectorAll(this.selector())[0];
+        else if ((!this.container) && !("jasmineTests" in window))
             liefsError.badArgs("Selector Search for '" + this.label + "' to find ONE matching div", "Matched " + document.querySelectorAll(this.selector()).length.toString() + " times", "Handler Item Check");
     }
     Item.get = function (label, instance) {
