@@ -137,6 +137,57 @@ var Item = (function () {
             newItem.pageTitle = IpageTitle;
         return newItem;
     };
+    Item.nextPage = function (item_, stop) {
+        if (stop === void 0) { stop = false; }
+        var item = Item.parseItem(item_);
+        if (item.currentPage + 1 < item.pages.length)
+            Item.setPage(item, item.currentPage + 1);
+        else if (!stop)
+            Item.setPage(item, 0);
+    };
+    Item.backPage = function (item_, stop) {
+        if (stop === void 0) { stop = false; }
+        var item = Item.parseItem(item_);
+        if (item.currentPage > 0)
+            Item.setPage(item, item.currentPage - 1);
+        else if (!stop)
+            Item.setPage(item, item.pages.length - 1);
+    };
+    Item.setPage = function (item_, value) {
+        Item.parseValue(value, Item.parseItem(item_));
+        Handler.resizeEvent();
+    };
+    Item.parseValue = function (value_, item) {
+        var foundPage = false;
+        if (liefs_lib_1.TypeOf(value_, "string")) {
+            for (var i = 0; i < item.pages.length; i++)
+                if (item.pages[i].label === value_) {
+                    item.currentPage = i;
+                    foundPage = true;
+                    break;
+                }
+            if (!foundPage)
+                liefs_lib_1.liefsError.badArgs("page id not found", value_, "Item setPage");
+        }
+        else {
+            if (item.pages.length - 1 > value_)
+                liefs_lib_1.liefsError.badArgs("Max Pages for " + item.label + " is " + item.pages.length, value_.toString(), "Item setPage");
+            item.currentPage = value_;
+        }
+    };
+    Item.parseItem = function (item_) {
+        var item;
+        if (liefs_lib_1.TypeOf(item_, "string")) {
+            if (!(item_ in Object.keys(Item.items)))
+                liefs_lib_1.liefsError.badArgs("Item Name Not Identified", item_, "Item - setPage()");
+            item = Item.items[item_][0];
+        }
+        else
+            item = item_;
+        if (!item.pages)
+            liefs_lib_1.liefsError.badArgs("Item " + item.label + " to be defined with pages", "it wasn't", "Item - setPage()");
+        return item;
+    };
     return Item;
 }());
 Item.debug = true;
