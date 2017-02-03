@@ -116,7 +116,10 @@ export class Item {
 
         if (this.start === "0px") Container.suspectedRoot = this.container;
 
-        if (isUniqueSelector(this.selector())) this.el = document.querySelectorAll(this.selector())[0];
+        if (isUniqueSelector(this.selector())) {
+          this.el = document.querySelectorAll(this.selector())[0];
+          this.el["style"]["position"] = "fixed";
+        }
         else if ((!this.container) && !("jasmineTests" in window))
           liefsError.badArgs("Selector Search for '" + this.label + "' to find ONE matching div",
           "Matched " + document.querySelectorAll(this.selector()).length.toString() + " times", "Handler Item Check");
