@@ -116,7 +116,7 @@ export class Item {
     static parseItem(item_: Item|string): Item {
       let item: Item;
       if (TypeOf(item_, "string")) {
-        if (!(<string>item_ in Object.keys(Item.items))) liefsError.badArgs("Item Name Not Identified", <string>item_, "Item - setPage()");
+        if (!isItIn(<string>item_, Item.items)) liefsError.badArgs("Item Name Not Identified", <string>item_, "Item - setPage()");
         item = Item.items[<string>item_][0];
       }
       else item = <Item>item_;

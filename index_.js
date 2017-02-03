@@ -176,7 +176,7 @@ var Item = (function () {
     Item.parseItem = function (item_) {
         var item;
         if (TypeOf(item_, "string")) {
-            if (!(item_ in Object.keys(Item.items)))
+            if (!isItIn(item_, Item.items))
                 liefsError.badArgs("Item Name Not Identified", item_, "Item - setPage()");
             item = Item.items[item_][0];
         }
