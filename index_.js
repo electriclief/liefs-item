@@ -60,7 +60,7 @@ var Item = (function () {
             this.el = document.querySelectorAll(this.selector())[0];
             this.el["style"]["position"] = "fixed";
             if (min || max)
-                this.dragBar = new Dragbar(this);
+                setTimeout(function () { _this.dragBar = new Dragbar(_this); }, 0);
         }
         else if ((!this.container) && !("jasmineTests" in window))
             liefsError.badArgs("Selector Search for '" + this.label + "' to find ONE matching div", "Matched " + document.querySelectorAll(this.selector()).length.toString() + " times", "Handler Item Check");
