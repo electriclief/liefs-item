@@ -1,5 +1,6 @@
 "use strict";
 var liefs_lib_1 = require("liefs-lib");
+var liefs_coordinates_1 = require("liefs-coordinates");
 var liefs_container_1 = require("liefs-container");
 var Item = (function () {
     function Item(label, start, min, max, container) {
@@ -8,8 +9,10 @@ var Item = (function () {
         if (container === void 0) { container = undefined; }
         var _this = this;
         this.selector = function () { return "#" + _this.label; };
+        this.dragSelector = function () { return _this.selector() + " > ." + (_this.lastDirection ? "H" : "V") + "dragbar"; };
+        var el;
         this.label = label;
-        this.start = this.current = start;
+        this.start = start;
         if (min)
             this.min = min;
         if (max)
@@ -27,6 +30,17 @@ var Item = (function () {
         if (liefs_lib_1.isUniqueSelector(this.selector())) {
             this.el = document.querySelectorAll(this.selector())[0];
             this.el["style"]["position"] = "fixed";
+            if (min || max) {
+                this.dragbar = new liefs_coordinates_1.Coord();
+                this.current = start;
+                if (document.querySelectorAll(this.dragSelector()).length)
+                    this.dragEl = document.querySelectorAll(this.dragSelector())[0];
+                else {
+                    this.dragEl = document.createElement("div");
+                    this.dragEl.className = "Hdragbar"; // gets updated anyways - this is just a reminder
+                    this.el.appendChild(this.dragEl);
+                }
+            }
         }
         else if ((!this.container) && !("jasmineTests" in window))
             liefs_lib_1.liefsError.badArgs("Selector Search for '" + this.label + "' to find ONE matching div", "Matched " + document.querySelectorAll(this.selector()).length.toString() + " times", "Handler Item Check");
@@ -192,6 +206,38 @@ var Item = (function () {
     Item.page = function (item) { return (item.pages) ? item.pages[item.currentPage] : item; };
     return Item;
 }());
+/*
+    static dragBar(el) {
+      let styleObj: any = {position: "fixed", "zIndex": el(id).style.zIndex + 1}
+    }
+
+      mapDragBar(id: string, p: Coord) {
+        let styleobj: any, plus: number, currentSize: number;
+
+        if (Object.keys(lastItemDirection).indexOf(id) !== -1)
+        if (dragBars[id]["size"] === undefined) currentSize = marginDefault;
+        else currentSize = parseInt(dragBars[id]["size"]);
+        styleobj = {position: "fixed", "zIndex": el(id).style.zIndex + 1};
+        if (lastItemDirection[id]) {
+          plus = dragBars[id]["leftside"] ? 0 : p["width"];
+          styleobj = Object.assign(styleobj, {
+            left: (p["x"] + plus - (currentSize / 2 )).toString() + "px",
+            width: currentSize.toString() + "px",
+            top: px(p, "y"), height: px(p, "height")
+          });
+        } else {
+          plus = dragBars[id]["leftside"] ? 0 : p["height"];
+          styleobj = Object.assign(styleobj, {
+            left: px(p, "x"), width: px(p, "width"),
+            top: ((p["y"] + plus) - (currentSize / 2)).toString() + "px",
+            height: currentSize.toString() + "px",
+          });
+        }
+        directiveSetStyles(el(id + "_dragBar"), styleobj);
+      }
+
+    }
+*/
 Item.debug = true;
 Item.items = {};
 exports.Item = Item;
