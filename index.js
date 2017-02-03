@@ -10,6 +10,7 @@ var Dragbar = (function () {
         this.Selector = function () { return _this.parent.selector() + " > ." + (_this.parent.lastDirection ? "H" : "V") + "dragbar"; };
         this.size = new liefs_coordinates_1.Coord();
         this.front = true;
+        this.parent = item;
         this.front = front;
         if (document.querySelectorAll(this.Selector()).length)
             this.el = document.querySelectorAll(this.Selector())[0];

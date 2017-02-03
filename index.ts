@@ -12,6 +12,7 @@ export class Dragbar {
   parent: Item;
   width: number;
   constructor(item: Item, front: boolean = true, width = undefined) {
+    this.parent = item;
     this.front = front;
     if (document.querySelectorAll(this.Selector()).length)
         this.el = document.querySelectorAll(this.Selector())[0];
