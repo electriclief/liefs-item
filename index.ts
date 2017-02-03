@@ -73,6 +73,7 @@ export class Item {
                 newItem = new Item(Ilabel, Istart, Imin, Imax);
                 newItem.pages = Iitems;
                 newItem.pages.unshift(newItem);
+                newItem.currentPage = 0;
                 return newItem;
             }
             else
