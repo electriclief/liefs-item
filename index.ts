@@ -109,7 +109,7 @@ export class Item {
         if (!foundPage) liefsError.badArgs("page id not found", <string>value_, "Item setPage");
       }
       else {
-        if (item.pages.length - 1 > <number>value_ ) liefsError.badArgs("Max Pages for " + item.label + " is " + item.pages.length, (<number>value_).toString(), "Item setPage");
+        if (item.pages.length - 1 < <number>value_ ) liefsError.badArgs("Max Pages for " + item.label + " is " + item.pages.length, (<number>value_).toString(), "Item setPage");
         item.currentPage = <number>value_;
       }
     }
