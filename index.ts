@@ -123,6 +123,7 @@ export class Item {
       if (!item.pages) liefsError.badArgs("Item " + item.label + " to be defined with pages", "it wasn't", "Item - setPage()");
       return item;
     }
+    static page(item: Item): Item { return (item.pages) ? item.pages[item.currentPage] : item; }
     static debug = true;
     static items: { [index: string]: Array<Item>; } = {};
 

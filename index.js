@@ -189,6 +189,7 @@ var Item = (function () {
             liefs_lib_1.liefsError.badArgs("Item " + item.label + " to be defined with pages", "it wasn't", "Item - setPage()");
         return item;
     };
+    Item.page = function (item) { return (item.pages) ? item.pages[item.currentPage] : item; };
     return Item;
 }());
 Item.debug = true;
