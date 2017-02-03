@@ -2,14 +2,46 @@
 var liefs_lib_1 = require("liefs-lib");
 var liefs_coordinates_1 = require("liefs-coordinates");
 var liefs_container_1 = require("liefs-container");
+var Dragbar = (function () {
+    function Dragbar(item, front, width) {
+        if (front === void 0) { front = true; }
+        if (width === void 0) { width = undefined; }
+        var _this = this;
+        this.Selector = function () { return _this.parent.selector() + " > ." + (_this.parent.lastDirection ? "H" : "V") + "dragbar"; };
+        this.size = new liefs_coordinates_1.Coord();
+        this.front = true;
+        this.front = front;
+        if (document.querySelectorAll(this.Selector()).length)
+            this.el = document.querySelectorAll(this.Selector())[0];
+        else {
+            this.el = document.createElement("div");
+            this.el.className = "Hdragbar"; // gets updated anyways - this is just a reminder
+            if (this.parent.el.firstChild)
+                this.parent.el.insertBefore(this.el, this.parent.el.firstChild);
+            else
+                this.parent.el.appendChild(this.el);
+        }
+        this.width = width || liefs_container_1.Container.get(this.parent.label).margin || liefs_container_1.Container.marginDefault;
+    }
+    Dragbar.prototype.calc = function () {
+        this.parent.size;
+        liefs_container_1.Container.get(this.parent.label).direction;
+    };
+    return Dragbar;
+}());
+exports.Dragbar = Dragbar;
 var Item = (function () {
+    //    dragSelector = () => { return this.selector() + " > ." + (this.lastDirection ? "H" : "V") + "dragbar"; };
+    //    dragEl: Element;
+    //    dragbar: Coord;
+    //    dragFront: boolean = true;
     function Item(label, start, min, max, container) {
         if (min === void 0) { min = undefined; }
         if (max === void 0) { max = undefined; }
         if (container === void 0) { container = undefined; }
         var _this = this;
+        this.lastDirection = true;
         this.selector = function () { return "#" + _this.label; };
-        this.dragSelector = function () { return _this.selector() + " > ." + (_this.lastDirection ? "H" : "V") + "dragbar"; };
         var el;
         this.label = label;
         this.start = start;
@@ -30,20 +62,8 @@ var Item = (function () {
         if (liefs_lib_1.isUniqueSelector(this.selector())) {
             this.el = document.querySelectorAll(this.selector())[0];
             this.el["style"]["position"] = "fixed";
-            if (min || max) {
-                this.dragbar = new liefs_coordinates_1.Coord();
-                this.current = start;
-                if (document.querySelectorAll(this.dragSelector()).length)
-                    this.dragEl = document.querySelectorAll(this.dragSelector())[0];
-                else {
-                    this.dragEl = document.createElement("div");
-                    this.dragEl.className = "Hdragbar"; // gets updated anyways - this is just a reminder
-                    if (this.el.firstChild)
-                        this.el.insertBefore(this.dragEl, this.el.firstChild);
-                    else
-                        this.el.appendChild(this.dragEl);
-                }
-            }
+            if (min || max)
+                this.dragBar = new Dragbar(this);
         }
         else if ((!this.container) && !("jasmineTests" in window))
             liefs_lib_1.liefsError.badArgs("Selector Search for '" + this.label + "' to find ONE matching div", "Matched " + document.querySelectorAll(this.selector()).length.toString() + " times", "Handler Item Check");
@@ -81,6 +101,7 @@ var Item = (function () {
         var Iitems, Icontainer, IisHor;
         var isItem;
         var IpageTitle;
+        var dragFront = true;
         if ("array_Item" in myArgsObj) {
             if (!("Item" in myArgsObj))
                 myArgsObj.Item = [];
@@ -97,6 +118,10 @@ var Item = (function () {
         if ("string" in myArgsObj) {
             for (var i = 0; i < myArgsObj.string.length; i++) {
                 isItem = myArgsObj.string[i];
+                if (isItem[0] === "*") {
+                    myArgsObj.string[i] = isItem.slice(1);
+                    dragFront = false;
+                }
                 if (isItem[0] === "-" || isItem[0] === "|") {
                     IisHor = (isItem[0] === "-");
                     myArgsObj.string[i] = isItem.slice(1);
@@ -153,6 +178,8 @@ var Item = (function () {
         newItem = new Item(Ilabel, Istart, Imin, Imax, Icontainer);
         if (IpageTitle)
             newItem.pageTitle = IpageTitle;
+        if (!dragFront)
+            newItem.dragBar.front = dragFront;
         return newItem;
     };
     Item.nextPage = function (item_, stop) {
