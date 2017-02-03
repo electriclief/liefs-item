@@ -22,6 +22,7 @@ var Dragbar = (function () {
             else
                 this.parent.el.appendChild(this.el);
         }
+        //    this width = (width) ? width : ()
         this.width = width || liefs_container_1.Container.of(item).margin || liefs_container_1.Container.marginDefault;
     }
     Dragbar.prototype.calc = function () {

@@ -22,6 +22,8 @@ export class Dragbar {
         if (this.parent.el.firstChild) this.parent.el.insertBefore(this.el, this.parent.el.firstChild);
         else this.parent.el.appendChild(this.el);
     }
+//    this width = (width) ? width : ()
+
     this.width = width || Container.of(item).margin || Container.marginDefault;
   }
   calc() {

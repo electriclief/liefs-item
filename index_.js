@@ -18,6 +18,7 @@ var Dragbar = (function () {
             else
                 this.parent.el.appendChild(this.el);
         }
+        //    this width = (width) ? width : ()
         this.width = width || Container.of(item).margin || Container.marginDefault;
     }
     Dragbar.prototype.calc = function () {
