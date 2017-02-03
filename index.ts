@@ -22,7 +22,7 @@ export class Dragbar {
         if (this.parent.el.firstChild) this.parent.el.insertBefore(this.el, this.parent.el.firstChild);
         else this.parent.el.appendChild(this.el);
     }
-    this.width = width || Container.get(this.parent.label).margin || Container.marginDefault;
+    this.width = width || Container.of(item).margin || Container.marginDefault;
   }
   calc() {
     this.parent.size;
