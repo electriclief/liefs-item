@@ -45,7 +45,12 @@ var Dragbar = (function () {
             event.preventDefault();
             var pItem = Dragbar.activeDragbar.parent;
             var dragDiff = (Dragbar.direction ? e.clientX : e.clientY) - Dragbar.dragstart;
-            var newCurrent = vpx(pItem.current) + dragDiff;
+            var newCurrent = liefs_lib_1.vpx(pItem.current) + dragDiff;
+            if (pItem.min && (newCurrent > liefs_lib_1.vpx(pItem.min)))
+                newCurrent = liefs_lib_1.vpx(pItem.min);
+            if (pItem.max && (newCurrent > liefs_lib_1.vpx(pItem.max)))
+                newCurrent = liefs_lib_1.vpx(pItem.max);
+            console.log(newCurrent);
         }
     };
     Dragbar.prototype.update = function () {
