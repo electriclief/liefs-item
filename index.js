@@ -33,6 +33,7 @@ var Dragbar = (function () {
     Dragbar.mouseDown = function (e, dragbar) {
         event.preventDefault();
         Dragbar.activeDragbar = dragbar;
+        Dragbar.beforeCurrent = dragbar.parent.current;
         Dragbar.isDown = true;
         Dragbar.direction = liefs_container_1.Container.of(dragbar.parent).direction;
         Dragbar.dragstart = Dragbar.direction ? e.clientX : e.clientY;
@@ -45,7 +46,7 @@ var Dragbar = (function () {
             event.preventDefault();
             var pItem = Dragbar.activeDragbar.parent;
             var dragDiff = (Dragbar.direction ? e.clientX : e.clientY) - Dragbar.dragstart;
-            var newCurrent = liefs_lib_1.vpx(pItem.current) + dragDiff;
+            var newCurrent = liefs_lib_1.vpx(Dragbar.beforeCurrent) + dragDiff;
             if (pItem.min && (newCurrent < liefs_lib_1.vpx(pItem.min)))
                 newCurrent = liefs_lib_1.vpx(pItem.min);
             if (pItem.max && (newCurrent > liefs_lib_1.vpx(pItem.max)))

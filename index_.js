@@ -29,6 +29,7 @@ var Dragbar = (function () {
     Dragbar.mouseDown = function (e, dragbar) {
         event.preventDefault();
         Dragbar.activeDragbar = dragbar;
+        Dragbar.beforeCurrent = dragbar.parent.current;
         Dragbar.isDown = true;
         Dragbar.direction = Container.of(dragbar.parent).direction;
         Dragbar.dragstart = Dragbar.direction ? e.clientX : e.clientY;
@@ -41,7 +42,7 @@ var Dragbar = (function () {
             event.preventDefault();
             var pItem = Dragbar.activeDragbar.parent;
             var dragDiff = (Dragbar.direction ? e.clientX : e.clientY) - Dragbar.dragstart;
-            var newCurrent = vpx(pItem.current) + dragDiff;
+            var newCurrent = vpx(Dragbar.beforeCurrent) + dragDiff;
             if (pItem.min && (newCurrent < vpx(pItem.min)))
                 newCurrent = vpx(pItem.min);
             if (pItem.max && (newCurrent > vpx(pItem.max)))
