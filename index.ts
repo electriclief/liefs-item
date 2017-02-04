@@ -44,7 +44,7 @@ export class Dragbar {
 }
 
 export class Item {
-    static get(label: string, instance = 0) {
+    static get(label: string, instance = 0): Item {
         if (label in Item.items) return Item.items[label][instance];
         return undefined;
     }
