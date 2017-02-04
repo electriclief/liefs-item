@@ -42,8 +42,8 @@ var Dragbar = (function () {
     Dragbar.mouseMove = function (e) {
         if (Dragbar.isDown) {
             event.preventDefault();
-            var dragNew = Dragbar.direction ? e.clientX : e.clientY;
-            console.log(Dragbar.dragstart - dragNew);
+            var dragDiff = (Dragbar.direction ? e.clientX : e.clientY) - Dragbar.dragstart;
+            console.log(dragDiff);
         }
     };
     Dragbar.prototype.update = function () {

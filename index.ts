@@ -17,8 +17,8 @@ export class Dragbar {
   static mouseMove (e: any) {
     if (Dragbar.isDown) {
       event.preventDefault();
-      let dragNew = Dragbar.direction ? e.clientX : e.clientY;
-      console.log(Dragbar.dragstart - dragNew);
+      let dragDiff = (Dragbar.direction ? e.clientX : e.clientY) - Dragbar.dragstart;
+      console.log(dragDiff);
     }
   }
   static direction: boolean;
