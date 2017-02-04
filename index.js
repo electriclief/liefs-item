@@ -46,7 +46,7 @@ var Dragbar = (function () {
             var pItem = Dragbar.activeDragbar.parent;
             var dragDiff = (Dragbar.direction ? e.clientX : e.clientY) - Dragbar.dragstart;
             var newCurrent = liefs_lib_1.vpx(pItem.current) + dragDiff;
-            if (pItem.min && (newCurrent > liefs_lib_1.vpx(pItem.min)))
+            if (pItem.min && (newCurrent < liefs_lib_1.vpx(pItem.min)))
                 newCurrent = liefs_lib_1.vpx(pItem.min);
             if (pItem.max && (newCurrent > liefs_lib_1.vpx(pItem.max)))
                 newCurrent = liefs_lib_1.vpx(pItem.max);
