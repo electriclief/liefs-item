@@ -30,10 +30,10 @@ var Dragbar = (function () {
         this.width = width || liefs_container_1.Container.of(item).margin || liefs_container_1.Container.marginDefault;
     }
     Dragbar.mouseDown = function (e) {
-        console.log("MouseDown");
+        console.log(e);
     };
     Dragbar.mouseUp = function (e) {
-        console.log("MouseUp");
+        console.log(e);
     };
     Dragbar.prototype.update = function () {
         console.log("Dragbar Update Called()");

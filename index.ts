@@ -6,10 +6,10 @@ declare var jasmineTests: boolean;
 
 export class Dragbar {
   static mouseDown (e: Event) {
-    console.log("MouseDown");
+    console.log(e);
   }
   static mouseUp (e: Event) {
-    console.log("MouseUp");
+    console.log(e);
   }
   static noInit: boolean = true;
   Selector = () => { return this.parent.selector() + " > ." + (this.parent.lastDirection ? "H" : "V") + "dragbar"; };

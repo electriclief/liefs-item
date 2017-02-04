@@ -26,10 +26,10 @@ var Dragbar = (function () {
         this.width = width || Container.of(item).margin || Container.marginDefault;
     }
     Dragbar.mouseDown = function (e) {
-        console.log("MouseDown");
+        console.log(e);
     };
     Dragbar.mouseUp = function (e) {
-        console.log("MouseUp");
+        console.log(e);
     };
     Dragbar.prototype.update = function () {
         console.log("Dragbar Update Called()");
