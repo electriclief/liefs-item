@@ -50,7 +50,8 @@ var Dragbar = (function () {
                 newCurrent = liefs_lib_1.vpx(pItem.min);
             if (pItem.max && (newCurrent > liefs_lib_1.vpx(pItem.max)))
                 newCurrent = liefs_lib_1.vpx(pItem.max);
-            console.log(newCurrent);
+            pItem.current = newCurrent.toString() + "px";
+            Handler.resizeEvent();
         }
     };
     Dragbar.prototype.update = function () {

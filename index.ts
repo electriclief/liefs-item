@@ -25,7 +25,8 @@ export class Dragbar {
       if (pItem.min && (newCurrent < vpx(pItem.min))) newCurrent = vpx(pItem.min);
       if (pItem.max && (newCurrent > vpx(pItem.max))) newCurrent = vpx(pItem.max);
 
-      console.log(newCurrent);
+      pItem.current = newCurrent.toString() + "px";
+      Handler.resizeEvent();
     }
   }
   static activeDragbar: Dragbar;
