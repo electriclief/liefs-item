@@ -5,19 +5,24 @@ import {Container} from "liefs-container";
 declare var jasmineTests: boolean;
 
 export class Dragbar {
-  static mouseDown (e: Event, dragbar: Dragbar) {
+  static mouseDown (e: any, dragbar: Dragbar) {
     event.preventDefault();
     Dragbar.isDown = true;
+    Dragbar.direction = Container.of(dragbar.parent).direction;
+    Dragbar.dragstart = Dragbar.direction ? e.clientX : e.clientY;
   }
   static mouseUp (e: Event) {
     Dragbar.isDown = false;
   }
   static mouseMove (e: any) {
-    event.preventDefault();
     if (Dragbar.isDown) {
-      console.log(e.clientX, e.clientY);
+      event.preventDefault();
+      let dragNew = Dragbar.direction ? e.clientX : e.clientY;
+      console.log(Dragbar.dragstart - dragNew);
     }
   }
+  static direction: boolean;
+  static dragstart: number;
   static isDown = false;
   static noInit: boolean = true;
   Selector = () => { return this.parent.selector() + " > ." + (this.parent.lastDirection ? "H" : "V") + "dragbar"; };
@@ -57,8 +62,6 @@ export class Dragbar {
       this.size.y += this.parent.size.height;
       this.size.height = this.width;
     }
-//  }
-//  set() {
     directiveSetStyles(this.el, {
       left: px(this.size.x), top: px(this.size.y), width: px(this.size.width), height: px(this.size.height)
     });
@@ -209,10 +212,6 @@ export class Item {
     el: Element;
     selector = () => { return "#" + this.label; };
     dragBar: Dragbar;
-//    dragSelector = () => { return this.selector() + " > ." + (this.lastDirection ? "H" : "V") + "dragbar"; };
-//    dragEl: Element;
-//    dragbar: Coord;
-//    dragFront: boolean = true;
 
     constructor(label: string, start: string, min: string = undefined, max: string = undefined, container: Container = undefined) {
         let el: any;

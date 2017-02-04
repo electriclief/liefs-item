@@ -29,14 +29,17 @@ var Dragbar = (function () {
     Dragbar.mouseDown = function (e, dragbar) {
         event.preventDefault();
         Dragbar.isDown = true;
+        Dragbar.direction = Container.of(dragbar.parent).direction;
+        Dragbar.dragstart = Dragbar.direction ? e.clientX : e.clientY;
     };
     Dragbar.mouseUp = function (e) {
         Dragbar.isDown = false;
     };
     Dragbar.mouseMove = function (e) {
-        event.preventDefault();
         if (Dragbar.isDown) {
-            console.log(e.clientX, e.clientY);
+            event.preventDefault();
+            var dragNew = Dragbar.direction ? e.clientX : e.clientY;
+            console.log(Dragbar.dragstart - dragNew);
         }
     };
     Dragbar.prototype.update = function () {
@@ -53,8 +56,6 @@ var Dragbar = (function () {
             this.size.y += this.parent.size.height;
             this.size.height = this.width;
         }
-        //  }
-        //  set() {
         directiveSetStyles(this.el, {
             left: px(this.size.x), top: px(this.size.y), width: px(this.size.width), height: px(this.size.height)
         });
@@ -64,10 +65,6 @@ var Dragbar = (function () {
 Dragbar.isDown = false;
 Dragbar.noInit = true;
 var Item = (function () {
-    //    dragSelector = () => { return this.selector() + " > ." + (this.lastDirection ? "H" : "V") + "dragbar"; };
-    //    dragEl: Element;
-    //    dragbar: Coord;
-    //    dragFront: boolean = true;
     function Item(label, start, min, max, container) {
         if (min === void 0) { min = undefined; }
         if (max === void 0) { max = undefined; }
