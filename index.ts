@@ -49,7 +49,7 @@ export class Dragbar {
         this.el = document.querySelectorAll(this.Selector())[0];
     else {
         this.el = document.createElement("div");
-        this.el.className = "Hdragbar"; // gets updated anyways - this is just a reminder
+        this.el.className = Container.of(item).direction ? "Hdragbar" : "Vdragbar";
         if (this.parent.el.firstChild) this.parent.el.insertBefore(this.el, this.parent.el.firstChild);
         else this.parent.el.appendChild(this.el);
     }
@@ -62,9 +62,11 @@ export class Dragbar {
     onEvent(this.el, "mousedown", (e) => { Dragbar.mouseDown(e, this); } );
 
     this.width = width || Container.of(item).margin || Container.marginDefault;
+
+
   }
   update() {
-//    console.log("Dragbar Update Called()");
+    console.log("Dragbar Update Called()");
     for (let eachKey of Object.keys(this.size)) this.size[eachKey] = this.parent.size[eachKey];
     if (Container.of(this.parent).direction) {
       this.size.x += this.parent.size.width;

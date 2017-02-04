@@ -16,7 +16,7 @@ var Dragbar = (function () {
             this.el = document.querySelectorAll(this.Selector())[0];
         else {
             this.el = document.createElement("div");
-            this.el.className = "Hdragbar"; // gets updated anyways - this is just a reminder
+            this.el.className = liefs_container_1.Container.of(item).direction ? "Hdragbar" : "Vdragbar";
             if (this.parent.el.firstChild)
                 this.parent.el.insertBefore(this.el, this.parent.el.firstChild);
             else
@@ -56,7 +56,7 @@ var Dragbar = (function () {
         }
     };
     Dragbar.prototype.update = function () {
-        //    console.log("Dragbar Update Called()");
+        console.log("Dragbar Update Called()");
         for (var _i = 0, _a = Object.keys(this.size); _i < _a.length; _i++) {
             var eachKey = _a[_i];
             this.size[eachKey] = this.parent.size[eachKey];
