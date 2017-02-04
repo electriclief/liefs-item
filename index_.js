@@ -27,12 +27,14 @@ var Dragbar = (function () {
         this.width = width || Container.of(item).margin || Container.marginDefault;
     }
     Dragbar.mouseDown = function (e, dragbar) {
+        event.preventDefault();
         Dragbar.isDown = true;
     };
     Dragbar.mouseUp = function (e) {
         Dragbar.isDown = false;
     };
     Dragbar.mouseMove = function (e) {
+        event.preventDefault();
         if (Dragbar.isDown) {
             console.log(e.clientX, e.clientY);
         }

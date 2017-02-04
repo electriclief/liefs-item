@@ -6,12 +6,14 @@ declare var jasmineTests: boolean;
 
 export class Dragbar {
   static mouseDown (e: Event, dragbar: Dragbar) {
+    event.preventDefault();
     Dragbar.isDown = true;
   }
   static mouseUp (e: Event) {
     Dragbar.isDown = false;
   }
-  static mouseMove (e: Event) {
+  static mouseMove (e: any) {
+    event.preventDefault();
     if (Dragbar.isDown) {
       console.log(e.clientX, e.clientY);
     }
