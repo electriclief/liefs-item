@@ -28,6 +28,7 @@ var Dragbar = (function () {
     }
     Dragbar.mouseDown = function (e, dragbar) {
         event.preventDefault();
+        Dragbar.activeDragbar = dragbar;
         Dragbar.isDown = true;
         Dragbar.direction = Container.of(dragbar.parent).direction;
         Dragbar.dragstart = Dragbar.direction ? e.clientX : e.clientY;
@@ -38,8 +39,9 @@ var Dragbar = (function () {
     Dragbar.mouseMove = function (e) {
         if (Dragbar.isDown) {
             event.preventDefault();
+            var pItem = Dragbar.activeDragbar.parent;
             var dragDiff = (Dragbar.direction ? e.clientX : e.clientY) - Dragbar.dragstart;
-            console.log(dragDiff);
+            var newCurrent = vpx(pItem.current) + dragDiff;
         }
     };
     Dragbar.prototype.update = function () {
