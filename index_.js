@@ -28,11 +28,11 @@ var Dragbar = (function () {
             this.size[eachKey] = this.parent.size[eachKey];
         }
         if (Container.of(this.parent).direction) {
-            this.size.x += -Math.round(this.width / 2.0) + this.parent.size.width;
+            this.size.x += this.parent.size.width;
             this.size.width = this.width;
         }
         else {
-            this.size.y += -Math.round(this.width / 2.0) + this.parent.size.height;
+            this.size.y += this.parent.size.height;
             this.size.height = this.width;
         }
         //  }
