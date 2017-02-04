@@ -32,11 +32,11 @@ var Dragbar = (function () {
             this.size[eachKey] = this.parent.size[eachKey];
         }
         if (liefs_container_1.Container.of(this.parent).direction) {
-            this.size.x += -Math.round(this.width / 2.0) + ((this.front) ? this.parent.size.width : 0);
+            this.size.x += -Math.round(this.width / 2.0) + this.parent.size.width;
             this.size.width = this.width;
         }
         else {
-            this.size.y += -Math.round(this.width / 2.0) + ((this.front) ? this.parent.size.height : 0);
+            this.size.y += -Math.round(this.width / 2.0) + this.parent.size.height;
             this.size.height = this.width;
         }
         //  }
