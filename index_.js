@@ -77,7 +77,7 @@ var Item = (function () {
         this.selector = function () { return "#" + _this.label; };
         var el;
         this.label = label;
-        this.start = start;
+        this.current = this.start = start;
         if (min)
             this.min = min;
         if (max)

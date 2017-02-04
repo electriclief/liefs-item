@@ -217,7 +217,7 @@ export class Item {
     constructor(label: string, start: string, min: string = undefined, max: string = undefined, container: Container = undefined) {
         let el: any;
         this.label = label;
-        this.start = start;
+        this.current = this.start = start;
         if (min) this.min = min;
         if (max) this.max = max;
         if (container) this.container = container;
