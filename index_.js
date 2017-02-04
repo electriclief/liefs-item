@@ -20,16 +20,22 @@ var Dragbar = (function () {
         }
         if (Dragbar.noInit) {
             onEvent(document.body, "mouseup", Dragbar.mouseUp);
+            onEvent(document.body, "mousemove", Dragbar.mouseMove);
             Dragbar.noInit = false;
         }
-        onEvent(this.el, "mousedown", Dragbar.mouseDown);
+        onEvent(this.el, "mousedown", function (e) { Dragbar.mouseDown(e, _this); });
         this.width = width || Container.of(item).margin || Container.marginDefault;
     }
-    Dragbar.mouseDown = function (e) {
-        console.log(e);
+    Dragbar.mouseDown = function (e, dragbar) {
+        Dragbar.isDown = true;
     };
     Dragbar.mouseUp = function (e) {
-        console.log(e);
+        Dragbar.isDown = false;
+    };
+    Dragbar.mouseMove = function (e) {
+        if (Dragbar.isDown) {
+            console.log(e.clientX, e.clientY);
+        }
     };
     Dragbar.prototype.update = function () {
         console.log("Dragbar Update Called()");
@@ -53,6 +59,7 @@ var Dragbar = (function () {
     };
     return Dragbar;
 }());
+Dragbar.isDown = false;
 Dragbar.noInit = true;
 var Item = (function () {
     //    dragSelector = () => { return this.selector() + " > ." + (this.lastDirection ? "H" : "V") + "dragbar"; };

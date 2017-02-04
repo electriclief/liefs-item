@@ -5,12 +5,18 @@ import {Container} from "liefs-container";
 declare var jasmineTests: boolean;
 
 export class Dragbar {
-  static mouseDown (e: Event) {
-    console.log(e);
+  static mouseDown (e: Event, dragbar: Dragbar) {
+    Dragbar.isDown = true;
   }
   static mouseUp (e: Event) {
-    console.log(e);
+    Dragbar.isDown = false;
   }
+  static mouseMove (e: Event) {
+    if (Dragbar.isDown) {
+      console.log(e.clientX, e.clientY);
+    }
+  }
+  static isDown = false;
   static noInit: boolean = true;
   Selector = () => { return this.parent.selector() + " > ." + (this.parent.lastDirection ? "H" : "V") + "dragbar"; };
   el: Element;
@@ -30,8 +36,12 @@ export class Dragbar {
         else this.parent.el.appendChild(this.el);
     }
 
-    if (Dragbar.noInit) { onEvent(document.body, "mouseup", Dragbar.mouseUp); Dragbar.noInit = false; }
-    onEvent(this.el, "mousedown", Dragbar.mouseDown);
+    if (Dragbar.noInit) {
+      onEvent(document.body, "mouseup", Dragbar.mouseUp);
+      onEvent(document.body, "mousemove", Dragbar.mouseMove);
+      Dragbar.noInit = false;
+    }
+    onEvent(this.el, "mousedown", (e) => { Dragbar.mouseDown(e, this); } );
 
     this.width = width || Container.of(item).margin || Container.marginDefault;
   }
