@@ -22,11 +22,18 @@ var Dragbar = (function () {
             else
                 this.parent.el.appendChild(this.el);
         }
+        if (Dragbar.noInit) {
+            liefs_lib_1.onEvent(document.body, "mouseup", Dragbar.mouseUp);
+            Dragbar.noInit = false;
+        }
         liefs_lib_1.onEvent(this.el, "mousedown", Dragbar.mouseDown);
         this.width = width || liefs_container_1.Container.of(item).margin || liefs_container_1.Container.marginDefault;
     }
     Dragbar.mouseDown = function (e) {
         console.log("MouseDown");
+    };
+    Dragbar.mouseUp = function (e) {
+        console.log("MouseUp");
     };
     Dragbar.prototype.update = function () {
         console.log("Dragbar Update Called()");
@@ -50,6 +57,7 @@ var Dragbar = (function () {
     };
     return Dragbar;
 }());
+Dragbar.noInit = true;
 exports.Dragbar = Dragbar;
 var Item = (function () {
     //    dragSelector = () => { return this.selector() + " > ." + (this.lastDirection ? "H" : "V") + "dragbar"; };

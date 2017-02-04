@@ -18,11 +18,18 @@ var Dragbar = (function () {
             else
                 this.parent.el.appendChild(this.el);
         }
+        if (Dragbar.noInit) {
+            onEvent(document.body, "mouseup", Dragbar.mouseUp);
+            Dragbar.noInit = false;
+        }
         onEvent(this.el, "mousedown", Dragbar.mouseDown);
         this.width = width || Container.of(item).margin || Container.marginDefault;
     }
     Dragbar.mouseDown = function (e) {
         console.log("MouseDown");
+    };
+    Dragbar.mouseUp = function (e) {
+        console.log("MouseUp");
     };
     Dragbar.prototype.update = function () {
         console.log("Dragbar Update Called()");
@@ -46,6 +53,7 @@ var Dragbar = (function () {
     };
     return Dragbar;
 }());
+Dragbar.noInit = true;
 var Item = (function () {
     //    dragSelector = () => { return this.selector() + " > ." + (this.lastDirection ? "H" : "V") + "dragbar"; };
     //    dragEl: Element;
