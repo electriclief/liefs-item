@@ -22,6 +22,7 @@ var Dragbar = (function () {
         this.width = width || Container.of(item).margin || Container.marginDefault;
     }
     Dragbar.prototype.update = function () {
+        console.log("Dragbar Update Called()");
         for (var _i = 0, _a = Object.keys(this.size); _i < _a.length; _i++) {
             var eachKey = _a[_i];
             this.size[eachKey] = this.parent.size[eachKey];
