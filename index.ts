@@ -1,4 +1,4 @@
-import {liefsError, TypeOf, CheckArgTypes, throwType, isStart, argsObj, isUniqueSelector} from "liefs-lib";
+import {liefsError, TypeOf, CheckArgTypes, throwType, isStart, argsObj, isUniqueSelector, onEvent} from "liefs-lib";
 import {Coord} from "liefs-coordinates";
 import {Container} from "liefs-container";
 
