@@ -5,6 +5,9 @@ import {Container} from "liefs-container";
 declare var jasmineTests: boolean;
 
 export class Dragbar {
+  static mouseDown (e: Event) {
+    console.log("MouseDown");
+  }
   Selector = () => { return this.parent.selector() + " > ." + (this.parent.lastDirection ? "H" : "V") + "dragbar"; };
   el: Element;
   size: Coord = new Coord();
@@ -22,8 +25,7 @@ export class Dragbar {
         if (this.parent.el.firstChild) this.parent.el.insertBefore(this.el, this.parent.el.firstChild);
         else this.parent.el.appendChild(this.el);
     }
-//    this width = (width) ? width : ()
-
+    onEvent(this.el, "mousedown", Dragbar.mouseDown);
     this.width = width || Container.of(item).margin || Container.marginDefault;
   }
   update() {

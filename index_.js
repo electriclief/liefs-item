@@ -18,9 +18,12 @@ var Dragbar = (function () {
             else
                 this.parent.el.appendChild(this.el);
         }
-        //    this width = (width) ? width : ()
+        onEvent(this.el, "mousedown", Dragbar.mouseDown);
         this.width = width || Container.of(item).margin || Container.marginDefault;
     }
+    Dragbar.mouseDown = function (e) {
+        console.log("MouseDown");
+    };
     Dragbar.prototype.update = function () {
         console.log("Dragbar Update Called()");
         for (var _i = 0, _a = Object.keys(this.size); _i < _a.length; _i++) {

@@ -22,9 +22,12 @@ var Dragbar = (function () {
             else
                 this.parent.el.appendChild(this.el);
         }
-        //    this width = (width) ? width : ()
+        liefs_lib_1.onEvent(this.el, "mousedown", Dragbar.mouseDown);
         this.width = width || liefs_container_1.Container.of(item).margin || liefs_container_1.Container.marginDefault;
     }
+    Dragbar.mouseDown = function (e) {
+        console.log("MouseDown");
+    };
     Dragbar.prototype.update = function () {
         console.log("Dragbar Update Called()");
         for (var _i = 0, _a = Object.keys(this.size); _i < _a.length; _i++) {
